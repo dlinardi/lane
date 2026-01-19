@@ -1,0 +1,35 @@
+# Binary outputs
+/lane
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Build artifacts
+/dist/
+/bin/
+
+# Test coverage
+coverage.out
+*.coverprofile
+*.out
+
+# Dependency cache (if not committed)
+/vendor/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+
+# Lane-specific
+.lane/worktrees/

@@ -1,0 +1,63 @@
+# Lefthook configuration for lane CLI
+# https://github.com/evilmartians/lefthook
+
+pre-commit:
+  parallel: true
+  commands:
+    validate-branch:
+      run: |
+        branch=$(git rev-parse --abbrev-ref HEAD)
+        if [ "$branch" = "main" ] || [ "$branch" = "master" ]; then
+          exit 0
+        fi
+        if ! echo "$branch" | grep -qE "^(feat|fix|chore|docs|refactor|test|style|perf|ci|build)/[A-Z]+-[0-9]+/.+$"; then
+          echo "Error: Branch name must follow format: {type}/{TICKET-123}/{description}"
+          echo "Current branch: $branch"
+          echo "Types: feat, fix, chore, docs, refactor, test, style, perf, ci, build"
+          exit 1
+        fi
+
+    go-fmt:
+      glob: "*.go"
+      run: gofmt -l -w {staged_files} && git add {staged_files}
+
+    golangci-lint:
+      glob: "*.go"
+      run: which golangci-lint > /dev/null && golangci-lint run --fix {staged_files} || true
+
+pre-push:
+  parallel: false
+  commands:
+    go-vet:
+      run: go vet ./...
+
+    go-build:
+      run: go build ./...
+
+    go-test:
+      run: go test ./...
+
+prepare-commit-msg:
+  commands:
+    prepend-ticket:
+      run: |
+        # Skip if this is a merge, squash, or amend commit
+        if [ -n "$2" ]; then
+          exit 0
+        fi
+
+        branch=$(git rev-parse --abbrev-ref HEAD)
+        ticket=$(echo "$branch" | grep -oE "[A-Z]+-[0-9]+" | head -1)
+
+        if [ -n "$ticket" ]; then
+          # Check if commit message already contains the ticket
+          if ! grep -q "$ticket" "$1"; then
+            # Get the commit message
+            msg=$(cat "$1")
+            # Prepend ticket to message if it follows type: format
+            if echo "$msg" | grep -qE "^(feat|fix|chore|docs|refactor|test|style|perf|ci|build):"; then
+              # Insert ticket after the colon
+              sed -i.bak "s/^\([a-z]*\): /\1($ticket): /" "$1" && rm -f "$1.bak"
+            fi
+          fi
+        fi
