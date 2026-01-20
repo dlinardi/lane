@@ -164,8 +164,6 @@ Valid types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
 Format:
 ```
 <type>: <description>
-
-[LAN-XX]
 ```
 
 Examples:
