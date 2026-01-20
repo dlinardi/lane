@@ -1,21 +1,21 @@
-<p align="center">
-  <img src="assets/lane-logo.png" alt="lane" width="120" />
+<p align="left">
+  <img src="assets/lane-logo.png" alt="lane" width="500" />
 </p>
 
-<h1 align="center">lane</h1>
+<h1 align="left">lane</h1>
 
-<p align="center">
+<p align="left">
   <strong>Parallel development lanes for AI-assisted coding</strong>
 </p>
 
-<p align="center">
+<p align="left">
   <a href="#installation">Installation</a> •
   <a href="#quick-start">Quick Start</a> •
   <a href="#commands">Commands</a> •
   <a href="#configuration">Configuration</a> •
 </p>
 
-<p align="center">
+<p align="left">
   <a href="https://github.com/dlinardi/lane/actions/workflows/ci.yml"><img src="https://github.com/dlinardi/lane/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="https://github.com/dlinardi/lane/releases"><img src="https://img.shields.io/github/v/release/dlinardi/lane" alt="Release"></a>
   <a href="https://goreportcard.com/report/github.com/dlinardi/lane"><img src="https://goreportcard.com/badge/github.com/dlinardi/lane" alt="Go Report Card"></a>
